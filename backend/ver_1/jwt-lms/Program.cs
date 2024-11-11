@@ -4,6 +4,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
 builder.Services.AddHttpClient<UserController>();
 builder.Services.AddHttpClient<CoursesController>();
 builder.Services.AddHttpClient<AssignmentsController>();
@@ -20,6 +32,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRouting(); // Thêm middleware routing
+app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 
 // Middleware xử lý lỗi

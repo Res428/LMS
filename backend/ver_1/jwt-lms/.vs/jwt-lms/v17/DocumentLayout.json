@@ -1,14 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\STUDY\\LMS_API\\40%\\backend\\jwt-lms\\",
+  "WorkspaceRootPath": "D:\\STUDY\\LMS_API\\40%\\backend\\ver_1\\jwt-lms\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F35A13A2-D320-4B87-B7B7-238CD92AA654}|jwt-lms.csproj|d:\\study\\lms_api\\40%\\backend\\jwt-lms\\controllers\\coursescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F35A13A2-D320-4B87-B7B7-238CD92AA654}|jwt-lms.csproj|solutionrelative:controllers\\coursescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F35A13A2-D320-4B87-B7B7-238CD92AA654}|jwt-lms.csproj|d:\\study\\lms_api\\40%\\backend\\ver_1\\jwt-lms\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F35A13A2-D320-4B87-B7B7-238CD92AA654}|jwt-lms.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F35A13A2-D320-4B87-B7B7-238CD92AA654}|jwt-lms.csproj|d:\\study\\lms_api\\40%\\backend\\jwt-lms\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F35A13A2-D320-4B87-B7B7-238CD92AA654}|jwt-lms.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F35A13A2-D320-4B87-B7B7-238CD92AA654}|jwt-lms.csproj|d:\\study\\lms_api\\40%\\backend\\ver_1\\jwt-lms\\controllers\\coursescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F35A13A2-D320-4B87-B7B7-238CD92AA654}|jwt-lms.csproj|solutionrelative:controllers\\coursescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,21 +18,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CoursesController.cs",
-              "DocumentMoniker": "D:\\STUDY\\LMS_API\\40%\\backend\\jwt-lms\\Controllers\\CoursesController.cs",
-              "RelativeDocumentMoniker": "Controllers\\CoursesController.cs",
-              "ToolTip": "D:\\STUDY\\LMS_API\\40%\\backend\\jwt-lms\\Controllers\\CoursesController.cs",
-              "RelativeToolTip": "Controllers\\CoursesController.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-02T04:28:19.631Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
@@ -40,12 +27,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "CoursesController.cs",
+              "DocumentMoniker": "D:\\STUDY\\LMS_API\\40%\\backend\\ver_1\\jwt-lms\\Controllers\\CoursesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CoursesController.cs",
+              "ToolTip": "D:\\STUDY\\LMS_API\\40%\\backend\\ver_1\\jwt-lms\\Controllers\\CoursesController.cs",
+              "RelativeToolTip": "Controllers\\CoursesController.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAIwEcAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-02T04:28:19.631Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "D:\\STUDY\\LMS_API\\40%\\backend\\jwt-lms\\Program.cs",
+              "DocumentMoniker": "D:\\STUDY\\LMS_API\\40%\\backend\\ver_1\\jwt-lms\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\STUDY\\LMS_API\\40%\\backend\\jwt-lms\\Program.cs",
+              "ToolTip": "D:\\STUDY\\LMS_API\\40%\\backend\\ver_1\\jwt-lms\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABkAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAAAgwCUAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-28T06:29:38.064Z",
               "EditorCaption": ""

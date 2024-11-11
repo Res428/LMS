@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1jLmsBGyr7g=",
+  "dgSpecHash": "Uazi+5JXWq0=",
   "success": true,
-  "projectFilePath": "D:\\STUDY\\LMS_API\\40%\\backend\\jwt-lms\\jwt-lms.csproj",
+  "projectFilePath": "D:\\STUDY\\LMS_API\\40%\\backend\\ver_1\\jwt-lms\\jwt-lms.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.8\\microsoft.aspnetcore.openapi.8.0.8.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

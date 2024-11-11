@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\STUDY\\LMS_API\\40%\\backend\\jwt-lms\\jwt-lms.csproj": {}
+    "D:\\STUDY\\LMS_API\\40%\\backend\\ver_1\\jwt-lms\\jwt-lms.csproj": {}
   },
   "projects": {
-    "D:\\STUDY\\LMS_API\\40%\\backend\\jwt-lms\\jwt-lms.csproj": {
+    "D:\\STUDY\\LMS_API\\40%\\backend\\ver_1\\jwt-lms\\jwt-lms.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\STUDY\\LMS_API\\40%\\backend\\jwt-lms\\jwt-lms.csproj",
+        "projectUniqueName": "D:\\STUDY\\LMS_API\\40%\\backend\\ver_1\\jwt-lms\\jwt-lms.csproj",
         "projectName": "jwt-lms",
-        "projectPath": "D:\\STUDY\\LMS_API\\40%\\backend\\jwt-lms\\jwt-lms.csproj",
+        "projectPath": "D:\\STUDY\\LMS_API\\40%\\backend\\ver_1\\jwt-lms\\jwt-lms.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "D:\\STUDY\\LMS_API\\40%\\backend\\jwt-lms\\obj\\",
+        "outputPath": "D:\\STUDY\\LMS_API\\40%\\backend\\ver_1\\jwt-lms\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
