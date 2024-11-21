@@ -1,0 +1,13 @@
+D:\STUDY\LMS_API\40%\backend\ver_2\jwt-lms\publish\jwt-lms.exe
+D:\STUDY\LMS_API\40%\backend\ver_2\jwt-lms\publish\appsettings.Development.json
+D:\STUDY\LMS_API\40%\backend\ver_2\jwt-lms\publish\appsettings.json
+D:\STUDY\LMS_API\40%\backend\ver_2\jwt-lms\publish\jwt-lms.dll
+D:\STUDY\LMS_API\40%\backend\ver_2\jwt-lms\publish\jwt-lms.deps.json
+D:\STUDY\LMS_API\40%\backend\ver_2\jwt-lms\publish\jwt-lms.runtimeconfig.json
+D:\STUDY\LMS_API\40%\backend\ver_2\jwt-lms\publish\jwt-lms.pdb
+D:\STUDY\LMS_API\40%\backend\ver_2\jwt-lms\publish\Microsoft.AspNetCore.OpenApi.dll
+D:\STUDY\LMS_API\40%\backend\ver_2\jwt-lms\publish\Microsoft.OpenApi.dll
+D:\STUDY\LMS_API\40%\backend\ver_2\jwt-lms\publish\Newtonsoft.Json.dll
+D:\STUDY\LMS_API\40%\backend\ver_2\jwt-lms\publish\Swashbuckle.AspNetCore.Swagger.dll
+D:\STUDY\LMS_API\40%\backend\ver_2\jwt-lms\publish\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\STUDY\LMS_API\40%\backend\ver_2\jwt-lms\publish\Swashbuckle.AspNetCore.SwaggerUI.dll

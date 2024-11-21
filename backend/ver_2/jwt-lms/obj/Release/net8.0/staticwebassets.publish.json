@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "8QDih2gvpzLiezDakFf9k6YT6i7PICb8NCtpJKb4lUU=",
+  "Source": "jwt-lms",
+  "BasePath": "_content/jwt-lms",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

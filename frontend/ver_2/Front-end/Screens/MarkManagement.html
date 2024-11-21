@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mark Management Page</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #d0e7f9;
+        margin: 0;
+        padding: 0;
+      }
+      .navbar {
+        background-color: #6ab4f8;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .navbar .user {
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+      .navbar .user i {
+        font-size: 24px;
+        margin-right: 10px;
+      }
+      .navbar .user span {
+        font-size: 16px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+      .navbar .user span:hover {
+        background-color: #2a4d8f;
+      }
+      .navbar .user span:active {
+        background-color: #4a6dbf;
+      }
+      .navbar .user .dropdown {
+        display: none;
+        position: absolute;
+        top: 27px;
+        left: 70%;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .navbar .user .dropdown a {
+        display: block;
+        padding: 10px 20px;
+        color: #333;
+        text-decoration: none;
+        transition: background-color 0.3s;
+      }
+      .navbar .user .dropdown a:hover {
+        background-color: #f0f0f0;
+      }
+      .navbar .user .dropdown a:active {
+        background-color: #e0e0e0;
+      }
+      .navbar .user:hover .dropdown {
+        display: block;
+      }
+      .navbar .menu {
+        display: flex;
+        align-items: center;
+      }
+      .navbar .menu a {
+        color: white;
+        text-decoration: none;
+        margin: 0 10px;
+        font-size: 14px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+      .navbar .menu a:hover {
+        background-color: #2a4d8f;
+      }
+      .navbar .menu a.active {
+        background-color: #2a4d8f;
+      }
+      .navbar .menu a:active {
+        background-color: #4a6dbf;
+      }
+      .navbar .search {
+        display: flex;
+        align-items: center;
+      }
+      .navbar .search input {
+        padding: 5px;
+        border: none;
+        border-radius: 5px;
+      }
+      .navbar .search i {
+        margin-left: 10px;
+        font-size: 18px;
+        color: white;
+      }
+      .content {
+        text-align: center;
+        padding: 20px;
+      }
+      .courses {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .course {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 0 10px;
+        width: 300px;
+        text-align: center;
+        padding: 20px;
+        transition: transform 0.3s;
+      }
+      .course:hover {
+        transform: translateY(-10px);
+      }
+      .course img {
+        width: 100%;
+        height: 250px;
+        border-radius: 10px;
+      }
+      .course p {
+        background-color: #2a4d8f;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .course p:hover {
+        background-color: #4a6dbf;
+      }
+      .course p:active {
+        background-color: #6a8dbf;
+      }
+      .courses a{
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="user">
+        <i class="fas fa-user-circle"> </i>
+        <span id="username"> USER </span>
+        <div class="dropdown">
+          <a href="user_info.html"> Profile </a>
+          <a href="../Main/Login.html"> Logout </a>
+        </div>
+      </div>
+      <div class="menu">
+        <a href="./Home.html"> HOME </a>
+        <a class="active" href="./MarkManagement.html"> MARK MANAGEMENT </a>
+        <!-- <a href="./CoursesManagement.html"> COURSES MANAGEMENT </a>
+        <a href=""> SETTING </a> -->
+      </div>
+      <div class="search">
+        <input placeholder="Search" type="text" />
+        <i class="fas fa-search"> </i>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="courses">
+        <!-- <div
+          class="course"
+          onclick="window.location.href='./MarkManagement_Table.html'"
+        >
+          <img
+            alt="Computer assembly image with a desktop computer and a motherboard"
+            height="200"
+            src="https://storage.googleapis.com/a1aa/image/vMySga7iwOaIJVYnFUo4qXNwiZnBNQ3olBS2LaeT5QMkVy0JA.jpg"
+            width="200"
+          />
+          <p>computer assembly</p>
+        </div>
+        <div
+          class="course"
+          onclick="window.location.href='./MarkManagement_Table.html'"
+        >
+          <img
+            alt="Computer network image with laptops connected to a cloud network"
+            height="200"
+            src="https://storage.googleapis.com/a1aa/image/HY7zYlQmjmYwAJfdz063Gn1RIDxViNtcpcWrWg9RaUhkVy0JA.jpg"
+            width="200"
+          />
+          <p>computer network</p>
+        </div>
+        <div
+          class="course"
+          onclick="window.location.href='./MarkManagement_Table.html'"
+        >
+          <img
+            alt="Web design image with a computer monitor and design tools"
+            height="200"
+            src="https://storage.googleapis.com/a1aa/image/QkfcQu2fQBqLT0YsydvfKg3aEDKydKUBlYN1WdsVXiIVWJTnA.jpg"
+            width="200"
+          />
+          <p>web design</p>
+        </div> -->
+      </div>
+    </div>
+    <script>
+      document
+        .querySelector(".user span")
+        .addEventListener("click", function () {
+          var dropdown = document.querySelector(".user .dropdown");
+          if (dropdown.style.display === "block") {
+            dropdown.style.display = "none";
+          } else {
+            dropdown.style.display = "block";
+          }
+        });
+
+      document.addEventListener("click", function (event) {
+        var isClickInside = document
+          .querySelector(".user")
+          .contains(event.target);
+        if (!isClickInside) {
+          document.querySelector(".user .dropdown").style.display = "none";
+        }
+      });
+
+      async function getUserInfo() {
+        const token = localStorage.getItem("token");
+        const username = localStorage.getItem("username");
+
+        // url + param
+        let url = "https://learn.s4h.edu.vn/webservice/rest/server.php";
+        url += "?wstoken=" + token;
+        url += "&moodlewsrestformat=json";
+        url += "&wsfunction=core_user_get_users_by_field";
+        url += "&field=username";
+        url += `&values[0]=${username}`;
+
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          });
+          const json = await response.json();
+          if (json.length < 1) return;
+          document.querySelector("#username").innerText = json[0].fullname;
+        } catch (error) {
+          alert(error);
+        }
+      }
+      getUserInfo();
+
+      async function displayCourses() {
+        const token = localStorage.getItem("token"); // Lấy token từ localStorage
+        const coursesContainer = document.querySelector(".courses"); // Chọn phần tử chứa danh sách khóa học
+
+        try {
+          const response = await fetch("http://localhost:5100/Courses/course", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch courses");
+          }
+
+          const data = await response.json();
+          const courses = data.courses; // Giả định dữ liệu trả về có thuộc tính 'courses'
+
+          // Duyệt qua danh sách khóa học và tạo phần tử HTML cho mỗi khóa học
+          courses.forEach((course) => {
+            const courseElement = document.createElement("a");
+            courseElement.setAttribute(
+              "href",
+              "./MarkManagement_Table.html"
+            );
+            courseElement.classList.add("course");
+            courseElement.innerHTML = `
+                    <img alt="Course" height="200" src="https://learn.s4h.edu.vn/pluginfile.php/1932/course/overviewfiles/z5778321537885_fe8149976b353cbd2608172f46d2998c.jpg" width="200"/>
+                    <div class="info">
+                        <p>${course.fullname}</p>
+                        
+                    </div>
+                    
+                `;
+            coursesContainer.appendChild(courseElement);
+          });
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      // Gọi hàm khi trang được tải
+      document.addEventListener("DOMContentLoaded", displayCourses);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,200 @@
+<html>
+  <head>
+    <title>Learning Management System</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        display: flex;
+        flex-direction: row;
+        height: 100vh;
+      }
+      .left-section {
+        background-color: #d3d3d3;
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+      .left-section h1 {
+        font-size: 4em;
+        color: white;
+        margin: 0;
+      }
+      .left-section h2 {
+        font-size: 3em;
+        color: #f7e600;
+        margin: 0;
+      }
+      .login-form {
+        background-color: #0a0a5b;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+        width: 80%;
+      }
+      .login-form input {
+        width: 100%;
+        padding: 10px;
+        margin: 15px 0;
+        border-radius: 5px;
+        border: none;
+      }
+      .login-form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #87ceeb;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 1em;
+        cursor: pointer;
+        transition: transform 0.3s;
+      }
+      .login-form button:hover {
+        transform: scale(1.05);
+      }
+      .login-form button:active {
+        background-color: #0000cd;
+      }
+      .login-form .social-icons {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .login-form .social-icons i {
+        color: white;
+        margin: 0 10px;
+        font-size: 1.5em;
+      }
+      .right-section {
+        background-color: #1774aa;
+        width: 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+      .right-section img {
+        width: 80%;
+      }
+      .top-bar {
+        height: 50px;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        text-align: center;
+      }
+      .bar {
+        background-color: #87ceeb;
+        margin: 0 auto;
+        margin: 20px;
+        border-radius: 10px;
+        height: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left-section">
+        <h1>Learning</h1>
+        <h2>management system</h2>
+        <form class="login-form" id="login-form" onsubmit="signIn(event)">
+          <h3 style="color: white">Login For Join</h3>
+          <input placeholder="Email Address" type="text" id="username" />
+          <input placeholder="Password" type="password" id="password" />
+          <button type="submit">Submit</button>
+          <div class="social-icons">
+            <i class="fab fa-google"></i>
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-whatsapp"></i>
+          </div>
+        </form>
+      </div>
+      <div class="right-section">
+        <img
+          alt="Illustration of a computer with educational elements"
+          src="../img/LMS-5-warning-signs-1-1080x675.png"
+          height="650"
+          width="600"
+        />
+      </div>
+    </div>
+    <div class="top-bar">
+      <div class="bar"></div>
+    </div>
+  </body>
+
+  <script>
+    deleteCookie('token');
+    // kiểm tra cookie tồn tại chưa
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(";").shift();
+    }
+
+    var token = getCookie("token");
+    if (token) {
+      document.location = "/Screens/Home.html";
+    }
+
+    // hàm gọi API đăng nhập
+    async function signIn(event) {
+      // không cho elemnt form tự gọi API và chuyển hướng
+      event.preventDefault();
+
+      // lấy giá trị username và mật khẩu
+      let username = encodeURIComponent(
+        document.getElementById("username").value
+      );
+      let password = encodeURIComponent(
+        document.getElementById("password").value
+      );
+
+      // chuẩn bị truyền các tham số của API
+      let url = "https://learn.s4h.edu.vn/login/token.php";
+      url += "?service=moodle_mobile_app";
+      url += "&username=" + username;
+      url += "&password=" + password;
+
+      // gọi API
+      let options = {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      };
+
+      try {
+        let response = await fetch(url, options);
+        let json = await response.json();
+
+        // kiểm tra đăng nhập thành công
+        if (json.error) {
+          alert(json.error);
+          return false;
+        }
+
+        // lưu token vào cookie để dùng lại
+        document.cookie = "token=" + json.token;
+        localStorage.setItem("token", json.token);
+
+        // Lưu tên người dùng vào localStorage
+        localStorage.setItem("username", username);
+
+        // chuyển sang trang /index.html
+        window.location.href = "/Screens/Home.html";
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+  </script>
+</html>
