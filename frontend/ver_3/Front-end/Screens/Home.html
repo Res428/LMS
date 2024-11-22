@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LMS Web Page</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      .header {
+        background-color: #6ab4f8;
+        padding: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        height: 60px;
+        position: relative;
+      }
+      .header .logo {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+      .header .logo i {
+        font-size: 24px;
+        margin-right: 10px;
+      }
+      .header .logo span {
+        font-size: 18px;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .header .logo span:hover {
+        background-color: #2a4d8f;
+        color: #fff;
+      }
+      .header .logo span:active {
+        background-color: #4a6dbf;
+      }
+      .header .nav {
+        display: flex;
+        align-items: center;
+      }
+      .header .nav a {
+        margin: 0 10px;
+        text-decoration: none;
+        color: #000;
+        font-size: 14px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .header .nav a.active,
+      .header .nav a:hover {
+        background-color: #2a4d8f;
+        color: #fff;
+      }
+      .header .nav a:active {
+        background-color: #4a6dbf;
+      }
+      .header .search {
+        display: flex;
+        align-items: center;
+      }
+      .header .search input {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .header .search i {
+        margin-left: 10px;
+        font-size: 18px;
+      }
+      .header .menu {
+        position: relative;
+      }
+      .header .menu i {
+        font-size: 24px;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .header .menu i:hover {
+        background-color: #2a4d8f;
+        color: #fff;
+      }
+      .header .menu i:active {
+        background-color: #4a6dbf;
+      }
+      
+
+      .logo .dropdown {
+        display: none;
+        position: absolute;
+        top: 70%;
+        left: 7%;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .logo .dropdown a {
+        display: block;
+        padding: 10px 20px;
+        color: #333;
+        text-decoration: none;
+        transition: background-color 0.3s;
+      }
+      .logo .dropdown a:hover {
+        background-color: #f0f0f0;
+      }
+      .logo .dropdown a:active {
+        background-color: #e0e0e0;
+      }
+      .logo:hover .dropdown {
+        display: block;
+      }
+
+      .content {
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .courses {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .course {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 0 10px;
+        width: 300px;
+        text-align: center;
+        padding: 20px;
+        transition: transform 0.3s;
+      }
+      .course:hover {
+        transform: translateY(-10px);
+      }
+      .course .box {
+        width: 100%;
+        height: 250px;
+        background-color: #ccc;
+        background-image: url("https://placehold.co/300x250");
+        background-size: cover;
+        background-position: center;
+      }
+      .course .info {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #000;
+      }
+      .course button {
+        margin-top: 10px;
+        padding: 5px 10px;
+        background-color: #2a4d8f;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: transform 0.3s;
+        
+      }
+      .course button:hover {
+        transform: scale(1.05);
+      }
+      .course button:active {
+        background-color: #4a6dbf;
+      }
+
+      .courses a{
+        text-decoration: none;
+      }
+      .footer {
+        background-color: #00008b;
+        height: 50px;
+      }
+    </style>
+    <script>
+      var courses = [];
+      var courseFiltered = [];
+
+      function searchCourse(event) {
+        let searchStr = event.target.value;
+        courseFiltered = courses.filter(course => course.fullname.toLowerCase().includes(searchStr.toLowerCase()));
+        console.log(courseFiltered);
+        renderCourses();
+      }
+
+      function renderCourses() {
+        const coursesContainer = document.querySelector('.courses'); // Chọn phần tử chứa danh sách khóa học
+        let innerHTML = '';
+
+        courseFiltered.forEach(course => {
+        const courseElement = document.createElement('a');
+          innerHTML += `
+            <a href="/Screens/CourseDetail.html?id=${course.id}" class="course">
+              <div class="box" style="background-image: url('https://learn.s4h.edu.vn/pluginfile.php/1932/course/overviewfiles/z5778321537885_fe8149976b353cbd2608172f46d2998c.jpg');"></div>
+              <div class="info">
+                  <p>Course Title: ${course.fullname}</p>
+                  <p>Classes: ${course.assignments.length}</p>
+                  <p>Created on: ${new Date(course.timemodified * 1000).toLocaleDateString()}</p>
+              </div>
+              <button>Enter Course</button>
+            </a>
+          `;
+      });
+      coursesContainer.innerHTML = innerHTML;
+      }
+
+      function redirectToUserInfo() {
+        window.location.href = "user_info.html";
+      }
+
+      async function displayCourses() {
+        const token = localStorage.getItem('token'); // Lấy token từ localStorage
+    
+        try {
+            const response = await fetch('http://localhost:5100/Courses/course', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to fetch courses');
+            }
+    
+            const data = await response.json();
+            courses = data.courses; // Giả định dữ liệu trả về có thuộc tính 'courses'
+            courseFiltered = courses;
+    
+            // Duyệt qua danh sách khóa học và tạo phần tử HTML cho mỗi khóa học
+            renderCourses();
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+    
+    // Gọi hàm khi trang được tải
+    document.addEventListener("DOMContentLoaded", displayCourses);
+    
+    
+
+      function toggleDropdown() {
+        const dropdown = document.querySelector(".header .menu .dropdown");
+        dropdown.style.display =
+          dropdown.style.display === "block" ? "none" : "block";
+      }
+
+      // Adding a new course dynamically
+      document.addEventListener("DOMContentLoaded", () => {
+        // Add event listener to the menu icon
+        const menuIcon = document.querySelector(".header .menu i");
+        menuIcon.addEventListener("click", toggleDropdown);
+      });
+
+
+
+      async function getUserInfo() {
+        const token = localStorage.getItem("token");
+        const username = localStorage.getItem("username");
+
+        // url + param
+        let url = "https://learn.s4h.edu.vn/webservice/rest/server.php";
+        url += "?wstoken=" + token;
+        url += "&moodlewsrestformat=json";
+        url += "&wsfunction=core_user_get_users_by_field";
+        url += "&field=username";
+        url += `&values[0]=${username}`;
+
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          });
+          const json = await response.json();
+          if (json.length < 1) return;
+          document.querySelector("#username").innerText = json[0].fullname;
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      getUserInfo();
+    </script>
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo" onclick="redirectToUserInfo()">
+        <i class="fas fa-user-circle"></i>
+        <span id="username"></span>
+
+        <div class="dropdown">
+          <a href="user_info.html"> Profile </a>
+          <a href="../Main/Login.html"> Logout </a>
+        </div>
+      </div>
+      <div class="nav">
+        <a href="./Home.html" class="active">HOME</a>
+        <a href="./MarkManagement.html">MARK MANAGEMENT</a>
+        <!-- <a href="./CoursesManagement.html">COURSES MANAGEMENT</a> -->
+        <!-- <a href="">SETTING</a> -->
+      </div>
+      <div class="search">
+        <input type="text" placeholder="Search" onchange="searchCourse(event)"/>
+        <i class="fas fa-search"></i>
+      </div>
+      
+    </div>
+    <div class="content">
+      <div class="courses">
+        <!-- <div class="course">
+          <div class="box"></div>
+          <div class="info">
+            <p>Course Title: Course 1</p>
+            <p>Classes: 5</p>
+            <p>Created on: 01/01/2023</p>
+          </div>
+          <button>Enter Course</button>
+        </div>
+        <div class="course">
+          <div class="box"></div>
+          <div class="info">
+            <p>Course Title: Course 2</p>
+            <p>Classes: 8</p>
+            <p>Created on: 02/01/2023</p>
+          </div>
+          <button>Enter Course</button>
+        </div>
+        <div class="course">
+          <div class="box"></div>
+          <div class="info">
+            <p>Course Title: Course 3</p>
+            <p>Classes: 10</p>
+            <p>Created on: 03/01/2023</p>
+          </div>
+          <button>Enter Course</button>
+        </div> -->
+      </div>
+    </div>
+    <div class="footer"></div>
+  </body>
+</html>

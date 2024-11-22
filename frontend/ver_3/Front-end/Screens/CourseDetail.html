@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LMS Web Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+
+  <style>
+    .header {
+      background-color: #6ab4f8;
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      height: 60px;
+      position: relative;
+    }
+    .header .logo {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    .header .logo i {
+      font-size: 24px;
+      margin-right: 10px;
+    }
+    .header .logo span {
+      font-size: 18px;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .header .logo span:hover {
+      background-color: #2a4d8f;
+      color: #fff;
+    }
+    .header .logo span:active {
+      background-color: #4a6dbf;
+    }
+    .header .nav {
+      display: flex;
+      align-items: center;
+    }
+    .header .nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #000;
+      font-size: 14px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .header .nav a.active,
+    .header .nav a:hover {
+      background-color: #2a4d8f;
+      color: #fff;
+    }
+    .header .nav a:active {
+      background-color: #4a6dbf;
+    }
+    .header .search {
+      display: flex;
+      align-items: center;
+    }
+    .header .search input {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .header .search i {
+      margin-left: 10px;
+      font-size: 18px;
+    }
+    .header .menu {
+      position: relative;
+    }
+    .header .menu i {
+      font-size: 24px;
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .header .menu i:hover {
+      background-color: #2a4d8f;
+      color: #fff;
+    }
+    .header .menu i:active {
+      background-color: #4a6dbf;
+    }
+
+    .logo .dropdown {
+      display: none;
+      position: absolute;
+      top: 70%;
+      left: 7%;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .logo .dropdown a {
+      display: block;
+      padding: 10px 20px;
+      color: #333;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+    .logo .dropdown a:hover {
+      background-color: #f0f0f0;
+    }
+    .logo .dropdown a:active {
+      background-color: #e0e0e0;
+    }
+    .logo:hover .dropdown {
+      display: block;
+    }
+    .footer {
+      background-color: #00008b;
+      height: 50px;
+    }
+  </style>
+
+  <body>
+    <div class="header">
+      <div class="logo" onclick="redirectToUserInfo()">
+        <i class="fas fa-user-circle"></i>
+        <span id="username"></span>
+
+        <div class="dropdown">
+          <a href="user_info.html"> Profile </a>
+          <a href="../Main/Login.html"> Logout </a>
+        </div>
+      </div>
+      <div class="nav">
+        <a href="./Home.html" class="active">HOME</a>
+        <a href="./MarkManagement.html">MARK MANAGEMENT</a>
+        <!-- <a href="./CoursesManagement.html">COURSES MANAGEMENT</a> -->
+        <!-- <a href="">SETTING</a> -->
+      </div>
+      <div class="search">
+        <input type="text" placeholder="Search" />
+        <i class="fas fa-search"></i>
+      </div>
+    </div>
+    <div class="p-6 flex flex-col">
+      <!-- course content -->
+      <h1 class="text-2xl font-bold">Course content</h1>
+      <div id="content" class="p-6 flex flex-col gap-6"></div>
+
+      <!-- course participant -->
+      <h1 class="mt-12 mb-6 text-2xl font-bold">Course participant</h1>
+      <table class="rounded border">
+        <thead>
+          <tr class="">
+            <td class="px-3 py-1.5 font-bold">Avatar</td>
+            <td class="px-3 py-1.5 font-bold">Fullname</td>
+            <td class="px-3 py-1.5 font-bold">Email</td>
+          </tr>
+        </thead>
+        <tbody id="participant">
+          <tr class="">
+            <td class="border-t px-3 py-1.5">Avatar</td>
+            <td class="border-t px-3 py-1.5">Fullname</td>
+            <td class="border-t px-3 py-1.5">Email</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      window.onload = async () => {
+        // get course id from query params
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseid = urlParams.get("id");
+
+        // get course content
+        getCourseContent(courseid);
+
+        // get course participant
+        getCourseParticipant(courseid);
+      };
+
+      async function getUserInfo() {
+        const token = localStorage.getItem("token");
+        const username = localStorage.getItem("username");
+
+        // url + param
+        let url = "https://learn.s4h.edu.vn/webservice/rest/server.php";
+        url += "?wstoken=" + token;
+        url += "&moodlewsrestformat=json";
+        url += "&wsfunction=core_user_get_users_by_field";
+        url += "&field=username";
+        url += `&values[0]=${username}`;
+
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          });
+          const json = await response.json();
+          if (json.length < 1) return;
+          document.querySelector("#username").innerText = json[0].fullname;
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      getUserInfo();
+
+      async function getAssignmentByCourse(courseid) {
+        const token = localStorage.getItem("token");
+
+        // url + param
+        let url = "https://learn.s4h.edu.vn/webservice/rest/server.php";
+        url += "?wstoken=" + token;
+        url += "&moodlewsrestformat=json";
+        url += "&wsfunction=mod_assign_get_assignments";
+        url += `&courseids[0]=${courseid}`;
+
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          });
+          const data = await response.json();
+          console.log("Data", data);
+          return data.courses;
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      async function getCourseContent(courseid) {
+        // lấy các assignment của khóa học
+        const courses = await getAssignmentByCourse(courseid);
+        const course = courses.find((course) => course.id == courseid);
+        const assignments = course.assignments;
+        console.log("Course id", courseid);
+
+        // get course content by id
+        const token = localStorage.getItem("token");
+
+        // url + param
+        let url = "https://learn.s4h.edu.vn/webservice/rest/server.php";
+        url += "?wstoken=" + token;
+        url += "&moodlewsrestformat=json";
+        url += "&wsfunction=core_course_get_contents";
+        url += `&courseid=${courseid}`;
+
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          });
+          const topics = await response.json();
+          console.log("Topics", topics);
+
+          if (topics.length < 1) return;
+
+          let innerHTML = "";
+          topics.forEach((topic) => {
+            const topicsElement = document.createElement("a");
+            topicsElement.setAttribute(
+              "href",
+              "/Screens/AssignmentDetails.html?id=" + topic.id
+            );
+            innerHTML += `
+                    <!-- topic -->
+                    <div class="rounded border p-6 flex flex-col gap-3 bg-gray-50">
+                        <h2 class="mb-3 text-xl font-bold">${topic.name}</h2>`;
+
+            for (let i = 0; i < topic.modules.length; i++) {
+              let module = topic.modules[i];
+
+              if (module.modname == "assign") {
+                let assignment = assignments.find(
+                  (assign) => assign.cmid == module.id
+                );
+                let assignmentid = assignment.id;
+                innerHTML += `
+                          <!-- modules -->
+                          <a href="/Screens/AssignmentDetails.html?courseid=${courseid}&assignid=${assignmentid}" class="flex flex-col gap-6">
+                              <div class="rounded border p-6 flex items-center gap-6 bg-white">
+                                  <img src="${module.modicon}" alt="${module.modname}" class="rounded aspect-square w-12 bg-gray-200">
+                                  <p class="text-lg font-medium">${module.name}</p>
+                              </div>
+                          </a>
+                          `;
+              }
+            }
+
+            innerHTML += `</div>`;
+          });
+
+          document.querySelector("#content").innerHTML = innerHTML;
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      async function getCourseParticipant(courseid) {
+        // get course content by id
+        const token = localStorage.getItem("token");
+
+        // url + param
+        let url = "https://learn.s4h.edu.vn/webservice/rest/server.php";
+        url += "?wstoken=" + token;
+        url += "&moodlewsrestformat=json";
+        url += "&wsfunction=core_enrol_get_enrolled_users";
+        url += `&courseid=${courseid}`;
+
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          });
+          const participants = await response.json();
+          console.log("Participants", participants);
+
+          let innerHTML = "";
+          participants.forEach((participant) => {
+            innerHTML += `
+                    <tr class="">
+                        <td class="border-t px-3 py-1.5">
+                            <img src="${participant.profileimageurl}" alt="avatar" class="rounded-full size-8">
+                        </td>
+                        <td class="border-t px-3 py-1.5">${participant.fullname}</td>
+                        <td class="border-t px-3 py-1.5">${participant.email}</td>
+                    </tr>
+                        `;
+          });
+
+          document.querySelector("#participant").innerHTML = innerHTML;
+        } catch (error) {
+          alert(error);
+        }
+      }
+    </script>
+
+    <div class="footer"></div>
+  </body>
+</html>
