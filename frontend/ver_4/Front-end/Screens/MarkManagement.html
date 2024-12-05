@@ -270,12 +270,16 @@
         const token = localStorage.getItem("token"); // Lấy token từ localStorage
         const coursesContainer = document.querySelector(".courses"); // Chọn phần tử chứa danh sách khóa học
 
+        let url = "https://learn.s4h.edu.vn/webservice/rest/server.php";
+        url += "?wstoken=" + token;
+        url += "&moodlewsrestformat=json";
+        url += "&wsfunction=mod_assign_get_assignments";
+
         try {
-          const response = await fetch("http://localhost:5100/Courses/course", {
+          const response = await fetch(url, {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
+              "Content-Type": "application/x-www-form-urlencoded",
             },
           });
 
