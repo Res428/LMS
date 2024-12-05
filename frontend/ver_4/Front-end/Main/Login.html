@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learning Management System</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../CSS/login.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="left-section">
+        <h1>Learning</h1>
+        <h2>Management System</h2>
+        <form class="login-form" id="login-form" onsubmit="signIn(event)">
+          <h3 style="color: white">Login To Join</h3>
+          <div class="input-group">
+
+          <input
+            placeholder="Email Address"
+            type="text"
+            id="username"
+            required
+          />
+          <input
+            placeholder="Password"
+            type="password"
+            id="password"
+            required
+          />
+
+        </div>
+          <button type="submit">Submit</button>
+          <div class="social-icons">
+            <i class="fab fa-google"></i>
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-whatsapp"></i>
+          </div>
+        </form>
+      </div>
+      <div class="right-section">
+        <img
+          alt="Illustration of a computer with educational elements"
+          src="/img/LMS-5-warning-signs-1-1080x675.png"
+          height="650"
+          width="600"
+        />
+      </div>
+    </div>
+    <div class="top-bar">
+      <div class="bar"></div>
+    </div>
+
+    <script>
+      // Xóa cookie token nếu tồn tại
+      document.cookie =
+        "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      localStorage.removeItem("token", json.token);
+
+      // Kiểm tra cookie tồn tại
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+      }
+
+      var token = getCookie("token");
+      if (token) {
+        document.location = "/Screens/Home.html"; // Chuyển hướng nếu đã đăng nhập
+      }
+
+      // Hàm gọi API đăng nhập
+      async function signIn(event) {
+        event.preventDefault(); // Ngăn chặn form tự động gửi
+
+        // Lấy giá trị username và mật khẩu
+        let username = encodeURIComponent(
+          document.getElementById("username").value
+        );
+        let password = encodeURIComponent(
+          document.getElementById("password").value
+        );
+
+        // Chuẩn bị URL cho API
+        let url = "https://learn.s4h.edu.vn/login/token.php";
+        url += "?service=moodle_mobile_app";
+        url += "&username=" + username;
+        url += "&password=" + password;
+
+        // Gọi API
+        let options = {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        };
+
+        try {
+          let response = await fetch(url, options);
+          let json = await response.json();
+
+          // Kiểm tra đăng nhập thành công
+          if (json.error) {
+            alert(json.error); // Hiển thị thông báo lỗi
+            return false;
+          }
+
+          // Lưu token vào cookie và localStorage
+          document.cookie = "token=" + json.token;
+          localStorage.setItem("token", json.token);
+          localStorage.setItem("username", username);
+
+          // Chuyển sang trang chính
+          window.location.href = "/Screens/Home.html";
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+    </script>
+  </body>
+</html>

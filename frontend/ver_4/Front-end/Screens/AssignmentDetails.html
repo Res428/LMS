@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="/CSS/style.css" />
+    <style>
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+        button {
+            margin-top: 10px;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .criteria {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="min-h-screen flex flex-col">
+        <div class="header">
+            <div class="logo" onclick="redirectToUserInfo()">
+                <i class="fas fa-user-circle"></i>
+                <span id="username"></span>
+                <div class="dropdown">
+                    <a href="user_info.html"> Profile </a>
+                    <a href="../Main/Login.html"> Logout </a>
+                </div>
+            </div>
+            <div class="nav">
+                <a href="./Home.html" class="active">HOME</a>
+                <a href="./MarkManagement.html">MARK MANAGEMENT</a>
+            </div>
+            <div class="search">
+                <input type="text" placeholder="Search" />
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+
+        <!-- Tiêu chí chấm nội dung bài nộp -->
+        <div class="p-6 w-full">
+            <div class="criteria">
+                <h2 class="font-bold">Tiêu chí chấm nội dung bài nộp:</h2>
+                <ul>
+                    <li>80-100: Nội dung xuất sắc, đầy đủ và rõ ràng.</li>
+                    <li>50-79: Nội dung đạt yêu cầu nhưng còn thiếu sót.</li>
+                    <li>Dưới 50: Nội dung không đạt yêu cầu, cần cải thiện.</li>
+                </ul>
+            </div>
+
+            <div class="container text-center">
+                <button onclick="gradeAllEssays()" class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">Chấm điểm</button>
+                <div class="result" id="result"></div>
+            </div>
+            <table class="rounded border w-full mt-4">
+                <thead>
+                    <tr>
+                        <td class="px-3 py-1.5 font-bold">File</td>
+                        <td class="px-3 py-1.5 font-bold">FullName</td>
+                        <td class="px-3 py-1.5 font-bold">Email</td>
+                        <td class="px-3 py-1.5 font-bold">CreatedAt</td>
+                        <td class="px-3 py-1.5 font-bold">Điểm</td>
+                    </tr>
+                </thead>
+                <tbody id="submissions">
+                    <tr>
+                        <td class="px-3 py-1.5">File</td>
+                        <td class="px-3 py-1.5">Fullname</td>
+                        <td class="px-3 py-1.5">Email</td>
+                        <td class="px-3 py-1.5">CreatedAt</td>
+                        <td class="px-3 py-1.5">Điểm</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-auto footer"></div>
+    </div>
+
+    <script>
+        async function getUserInfo() {
+            const token = localStorage.getItem("token");
+            const username = localStorage.getItem("username");
+
+            let url = "https://learn.s4h.edu.vn/webservice/rest/server.php";
+            url += "?wstoken=" + token;
+            url += "&moodlewsrestformat=json";
+            url += "&wsfunction=core_user_get_users_by_field";
+            url += "&field=username";
+            url += `&values[0]=${username}`;
+
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                });
+                const json = await response.json();
+                if (json.length < 1) return;
+                document.querySelector("#username").innerText = json[0].fullname;
+            } catch (error) {
+                alert(error);
+            }
+        }
+        getUserInfo();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const assignmentid = urlParams.get("assignid");
+        const courseid = urlParams.get("courseid");
+
+        getSubmission(assignmentid);
+
+        async function getCourseParticipant(courseid) {
+            const token = localStorage.getItem("token");
+            let url = "https://learn.s4h.edu.vn/webservice/rest/server.php";
+            url += "?wstoken=" + token;
+            url += "&moodlewsrestformat=json";
+            url += "&wsfunction=core_enrol_get_enrolled_users";
+            url += `&courseid=${courseid}`;
+
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                });
+                const participants = await response.json();
+                return participants;
+            } catch (error) {
+                alert(error);
+            }
+        }
+
+        async function getSubmission(id) {
+            const users = await getCourseParticipant(courseid);
+            const token = localStorage.getItem("token");
+            let url = "https://learn.s4h.edu.vn/webservice/rest/server.php";
+            url += "?wstoken=" + token;
+            url += "&moodlewsrestformat=json";
+            url += "&wsfunction=mod_assign_get_submissions";
+            url += `&assignmentids[0]=${id}`;
+
+            let response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            });
+            let json = await response.json();
+            let assignment = json.assignments[0];
+            let submissions = assignment.submissions;
+
+            submissions = submissions.map((submission) => {
+                const user = users.find((user) => user.id == submission.userid);
+                const onlineTextPlugin = submission.plugins.find(
+                    (plugin) => plugin.type === "onlinetext"
+                );
+                const editorField = onlineTextPlugin ? onlineTextPlugin.editorfields[0] : null;
+
+                return {
+                    user: user,
+                    file: editorField ? editorField.text : "",
+                    submission: submission,
+                    timecreated: submission.timecreated,
+                };
+            });
+
+
+            displaySubmissions(submissions);
+        }
+
+        function displaySubmissions(submissions) {
+            let innerHTML = "";
+
+            submissions.forEach((submission) => {
+                let files = submission.submission.plugins[0].fileareas[0].files;
+                let file = files.length > 0 ? files[0] : {};
+
+                const createdAt = new Date(submission.timecreated * 1000);
+                innerHTML += `
+                    <tr>
+                        <td class="px-3 py-1.5" fileUrl="${file.fileurl}">${file.filename || "No submission file"}</td>
+                        <td class="px-3 py-1.5">${submission.user.fullname}</td>
+                        <td class="px-3 py-1.5">${submission.user.email}</td>
+                        <td class="px-3 py-1.5">${createdAt.toLocaleString("en-GB")}</td>
+                        <td class="px-3 py-1.5" id="score-${submission.user.id}">Chưa chấm</td>
+                    </tr>
+                `;
+            });
+
+            document.querySelector("#submissions").innerHTML = innerHTML;
+        }
+
+        async function gradeAllEssays() {
+            const submissions = document.querySelectorAll("#submissions tr");
+            let grades = [];
+
+            // for (const submissionRow of submissions) {
+            for (let i = 0; i < submissions.length; i++) {
+                const submissionRow = submissions[i];
+
+                const fileContent = submissionRow.cells[0].innerText; // Lấy nội dung file
+                const userId = submissionRow.cells[1].innerText; // Lấy tên người dùng
+                
+                const fileUrl = submissionRow.cells[0].getAttribute("fileUrl");
+
+                if (fileUrl == "undefined") continue;
+
+                let score = await gradeEssay(fileUrl);
+
+                // remove markdown formatting
+                let parts = score.split('\n');
+                parts.splice(0, 1);
+                parts.splice(parts.length - 2, 1);
+                score = parts.join('');
+                console.log(score);
+                score = JSON.parse(score);
+                
+                const scoreCell = submissionRow.querySelector('td[id^="score-"]');
+                scoreCell.innerText = score.total_score;
+
+                // Thay đổi màu sắc dựa trên điểm
+                if (score.total_score >= 80) {
+                    scoreCell.classList.add('text-green-500');
+                } else if (score.total_score >= 50) {
+                    scoreCell.classList.add('text-yellow-500');
+                } else {
+                    scoreCell.classList.add('text-red-500');
+                }
+
+                // Lưu điểm cho từng sinh viên
+                grades.push({ userId: userId, score: score.total_score });
+            }
+
+            // Chuyển đến trang chấm điểm với điểm đã chấm
+            setTimeout(() => {
+                window.location.href = `/Screens/MarkManagement_Table.html?grades=${encodeURIComponent(JSON.stringify(grades))}`;
+            }, 2000); // Chờ 2 giây trước khi chuyển trang
+        }
+
+        async function gradeEssay(fileUrl) {
+            const apiUrl = "/grade-essay"; // Đường dẫn đến server proxy
+        
+            try {
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ fileUrl }),
+                });
+        
+                if (!response.ok) {
+                    throw new Error("Lỗi khi gọi API");
+                }
+        
+                const data = await response.json();
+                return data; // Trả về điểm số
+            } catch (error) {
+                console.error(error);
+                return 0; // Trả về 0 nếu có lỗi
+            }
+        }        
+    </script>
+</body>
+</html>

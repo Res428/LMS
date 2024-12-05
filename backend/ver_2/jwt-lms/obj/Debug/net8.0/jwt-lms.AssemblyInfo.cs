@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("jwt-lms")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5e3e2c88976809116015ecb82cc4ea85793f4a93")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a635bdf7924c7f683e409253c3b1dbded33614f2")]
 [assembly: System.Reflection.AssemblyProductAttribute("jwt-lms")]
 [assembly: System.Reflection.AssemblyTitleAttribute("jwt-lms")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

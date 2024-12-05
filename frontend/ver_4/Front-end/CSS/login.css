@@ -1,0 +1,100 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+.left-section {
+    background-color: #d3d3d3;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.left-section h1 {
+    font-size: 4em;
+    color: white;
+    margin: 0;
+}
+.left-section h2 {
+    font-size: 3em;
+    color: #f7e600;
+    margin: 0;
+}
+.login-form {
+    background-color: #0a0a5b;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    width: 80%;
+}
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 5px;
+    border: none;
+}
+
+.login-form .input-group{
+    margin-right: 20px;
+}
+.login-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #87ceeb;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.login-form button:hover {
+    transform: scale(1.05);
+}
+.login-form button:active {
+    background-color: #0000cd;
+}
+.login-form .social-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.login-form .social-icons i {
+    color: white;
+    margin: 0 10px;
+    font-size: 1.5em;
+}
+.right-section {
+    background-color: #1774aa;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.right-section img {
+    width: 80%;
+}
+.top-bar {
+    height: 50px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+}
+.bar {
+    background-color: #87ceeb;
+    margin: 0 auto;
+    margin: 20px;
+    border-radius: 10px;
+    height: 50px;
+}
