@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mark Management Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
       rel="stylesheet"
@@ -16,7 +17,7 @@
         padding: 0;
       }
       .navbar {
-        background-color: #6ab4f8;
+        background-color: #007bff;
         padding: 10px 20px;
         display: flex;
         align-items: center;
@@ -135,7 +136,7 @@
         border-radius: 10px;
       }
       .course p {
-        background-color: #2a4d8f;
+        background-color: #007bff;
         color: white;
         padding: 10px;
         border-radius: 5px;
@@ -145,13 +146,22 @@
         transition: background-color 0.3s;
       }
       .course p:hover {
-        background-color: #4a6dbf;
+        background-color: #0056b3;
       }
       .course p:active {
         background-color: #6a8dbf;
       }
       .courses a{
         text-decoration: none;
+      }
+      .footer {
+        background-color: #00008b;
+        height: 50px;
+        position: fixed;
+        color: white;
+        bottom: 0;
+        left: 0;
+        right: 0;
       }
     </style>
   </head>
@@ -216,6 +226,8 @@
           <p>web design</p>
         </div> -->
       </div>
+    </div><div class="footer text-white text-center py-2">
+      <p>Copyright © 2023 - All rights reserved</p>
     </div>
     <script>
       document
@@ -270,12 +282,16 @@
         const token = localStorage.getItem("token"); // Lấy token từ localStorage
         const coursesContainer = document.querySelector(".courses"); // Chọn phần tử chứa danh sách khóa học
 
+        let url = "https://learn.s4h.edu.vn/webservice/rest/server.php";
+        url += "?wstoken=" + token;
+        url += "&moodlewsrestformat=json";
+        url += "&wsfunction=mod_assign_get_assignments";
+
         try {
-          const response = await fetch("http://localhost:5100/Courses/course", {
+          const response = await fetch(url, {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
+              "Content-Type": "application/x-www-form-urlencoded",
             },
           });
 

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mark Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="/CSS/style.css" />
+</head>
+<body>
+    <div class="min-h-screen flex flex-col">
+        <div class="header">
+            <div class="logo" onclick="redirectToUserInfo()">
+                <i class="fas fa-user-circle"></i>
+                <span id="username"></span>
+                <div class="dropdown">
+                    <a href="user_info.html"> Profile </a>
+                    <a href="../Main/Login.html"> Logout </a>
+                </div>
+            </div>
+            <div class="nav">
+                <a href="./Home.html" class="active">HOME</a>
+                <a href="./MarkManagement.html">MARK MANAGEMENT</a>
+            </div>
+            <div class="search">
+                <input type="text" placeholder="Search" />
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+
+        <div class="container mx-auto p-4">
+            <h1 class="text-xl font-bold mb-4">Kết quả chấm điểm</h1>
+            <table class="min-w-full border">
+                <thead>
+                    <tr>
+                        <th class="border px-4 py-2">FullName</th>
+                        <th class="border px-4 py-2">Điểm</th>
+                        <th class="border px-4 py-2">Lý do phản hồi</th>
+                    </tr>
+                </thead>
+                <tbody id="gradesTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Lấy thông tin người dùng
+        async function getUserInfo() {
+            const token = localStorage.getItem("token");
+            const username = localStorage.getItem("username");
+
+            let url = "https://learn.s4h.edu.vn/webservice/rest/server.php";
+            url += "?wstoken=" + token;
+            url += "&moodlewsrestformat=json";
+            url += "&wsfunction=core_user_get_users_by_field";
+            url += "&field=username";
+            url += `&values[0]=${username}`;
+
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                });
+                const json = await response.json();
+                if (json.length < 1) return;
+                document.querySelector("#username").innerText = json[0].fullname;
+            } catch (error) {
+                alert(error);
+            }
+        }
+        getUserInfo();
+
+        // Lấy điểm từ URL và hiển thị
+        const urlParams = new URLSearchParams(window.location.search);
+        const grades = JSON.parse(
+            decodeURIComponent(urlParams.get("grades")) || "[]"
+        );
+
+        const gradesTable = document.getElementById("gradesTable");
+
+        // Hiển thị điểm vào bảng
+        grades.forEach((grade) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td class="border px-4 py-2">${grade.userId}</td>
+                <td class="border px-4 py-2 ${getScoreClass(grade.score)}">${grade.score}</td>
+                <td class="border px-4 py-2">${getFeedback(grade.score)}</td>
+            `;
+            gradesTable.appendChild(row);
+        });
+
+        // Hàm để xác định lớp CSS cho điểm số
+        function getScoreClass(score) {
+            if (score >= 80) return "text-green-500";
+            if (score >= 50) return "text-yellow-500";
+            return "text-red-500";
+        }
+
+        // Hàm để cung cấp lý do phản hồi dựa trên điểm số
+        function getFeedback(score) {
+            if (score >= 80) return "Nội dung xuất sắc, không cần cải thiện.";
+            if (score >= 50) return "Nội dung đạt yêu cầu nhưng cần cải thiện một số điểm.";
+            return "Nội dung không đạt yêu cầu, cần xem xét lại.";
+        }
+    </script>
+</body>
+</html>

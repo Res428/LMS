@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>User Information</title>
+    <style>
+        /* CSS Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Đảm bảo chiều cao tối thiểu của body */
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .navbar a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #2a4d8f;
+        }
+
+        .user-info {
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+            flex: 1; /* Cho phép phần này mở rộng để lấp đầy không gian còn lại */
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #00008b;
+            color: white;
+            position: fixed; /* Cố định footer */
+            bottom: 0; /* Đặt footer ở dưới cùng */
+            left: 0;
+            right: 0; /* Đảm bảo footer trải dài toàn bộ chiều rộng */
+        }
+
+        @media (max-width: 768px) {
+            .info-card {
+                padding: 15px;
+            }
+            .profile-pic {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>User Information</h1>
+        <nav class="navbar">
+            <a href="./Home.html">Home</a>
+            <a href="./MarkManagement.html">Mark Management</a>
+            <a href="../Main/Login.html">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <section class="user-info">
+            <h2>Profile Details</h2>
+            <div class="info-card">
+                <img src="" alt="User  Profile Picture" class="profile-pic">
+                <h3>John Doe</h3>
+                <p class="info">Email: john.doe@example.com</p>
+                <p class="info">Phone: (123) 456-7890</p>
+                <p class="info">Address: 123 Main St, Anytown, USA</p>
+                <button onclick="editProfile()" style="margin-top: 15px; padding: 10px 15px; background-color: #2a4d8f; color: white; border: none; border-radius: 5px; cursor: pointer;">Edit Profile</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Copyright © 2023 - All rights reserved</p>
+    </footer>
+
+    <script>
+        function editProfile() {
+            alert("Edit profile functionality to be implemented.");
+        }
+    </script>
+</body>
+</html>
